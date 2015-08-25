@@ -93,6 +93,8 @@ static inline void desc_print_begin(const uint8_t *p_desc, f_print pf_print,
 static inline void desc_print_end(const uint8_t *p_desc, f_print pf_print,
                                   void *opaque, print_type_t i_print_type)
 {
+    (void) p_desc;
+
     switch (i_print_type) {
     case PRINT_XML:
         pf_print(opaque, "</DESC>");
@@ -185,6 +187,14 @@ static inline uint8_t *descs_get_desc(uint8_t *p_descs, uint16_t n)
 {
     return descl_get_desc(p_descs + DESCS_HEADER_SIZE,
                           descs_get_length(p_descs), n);
+}
+
+static inline bool descs_validate_desc(const uint8_t *p_descs,
+                                       const uint8_t *p_desc,
+                                       uint8_t i_desclength)
+{
+    uint16_t i_descs_length = descs_get_length(p_descs);
+    return (p_desc + i_desclength <= p_descs + i_descs_length);
 }
 
 static inline bool descs_validate(const uint8_t *p_descs)

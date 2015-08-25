@@ -147,7 +147,7 @@ static inline void mp2vseq_set_vertical(uint8_t *p_mp2vseq, uint16_t i_vertical)
 
 static inline uint16_t mp2vseq_get_vertical(const uint8_t *p_mp2vseq)
 {
-    return ((p_mp2vseq[5] & 0xf) << 8) | p_mp2vseq[6] >> 4;
+    return ((p_mp2vseq[5] & 0xf) << 8) | p_mp2vseq[6];
 }
 
 static inline void mp2vseq_set_aspect(uint8_t *p_mp2vseq, uint8_t i_aspect)
@@ -452,6 +452,48 @@ static inline void mp2vseqdx_set_color(uint8_t *p_mp2vseqdx)
 static inline bool mp2vseqdx_get_color(const uint8_t *p_mp2vseqdx)
 {
     return !!(p_mp2vseqdx[4] & 0x1);
+}
+
+static inline void mp2vseqdx_set_primaries(uint8_t *p_mp2vseqdx,
+                                                 uint8_t i_primaries)
+{
+    mp2vseqdx_set_color(p_mp2vseqdx);
+    p_mp2vseqdx[5] = i_primaries;
+}
+
+static inline uint8_t mp2vseqdx_get_primaries(const uint8_t *p_mp2vseqdx)
+{
+    if (!mp2vseqdx_get_color(p_mp2vseqdx))
+        return 1;
+    return p_mp2vseqdx[5];
+}
+
+static inline void mp2vseqdx_set_transfer(uint8_t *p_mp2vseqdx,
+                                          uint8_t i_transfer)
+{
+    mp2vseqdx_set_color(p_mp2vseqdx);
+    p_mp2vseqdx[6] = i_transfer;
+}
+
+static inline uint8_t mp2vseqdx_get_transfer(const uint8_t *p_mp2vseqdx)
+{
+    if (!mp2vseqdx_get_color(p_mp2vseqdx))
+        return 1;
+    return p_mp2vseqdx[6];
+}
+
+static inline void mp2vseqdx_set_matrixcoeffs(uint8_t *p_mp2vseqdx,
+                                              uint8_t i_matrixcoeffs)
+{
+    mp2vseqdx_set_color(p_mp2vseqdx);
+    p_mp2vseqdx[7] = i_matrixcoeffs;
+}
+
+static inline uint8_t mp2vseqdx_get_matrixcoeffs(const uint8_t *p_mp2vseqdx)
+{
+    if (!mp2vseqdx_get_color(p_mp2vseqdx))
+        return 1;
+    return p_mp2vseqdx[7];
 }
 
 static inline void mp2vseqdx_set_horizontal(uint8_t *p_mp2vseqdx,

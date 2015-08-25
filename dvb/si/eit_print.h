@@ -50,7 +50,7 @@ static inline void eit_print(uint8_t *p_eit,
     uint8_t *p_event;
     uint8_t j = 0;
     uint8_t i_tid = psi_get_tableid(p_eit);
-    char *psz_tid = "unknown";
+    const char *psz_tid = "unknown";
 
     if (i_tid == EIT_TABLE_ID_PF_ACTUAL)
         psz_tid = "actual_pf";
@@ -76,12 +76,14 @@ static inline void eit_print(uint8_t *p_eit,
         break;
     default:
         pf_print(print_opaque,
-                 "new EIT tableid=0x%02x type=%s service_id=%u version=%u%s tsid=%u"
+                 "new EIT tableid=0x%02x type=%s service_id=%u version=%u%s section=%u/%u tsid=%u"
                  " onid=%u",
                  i_tid, psz_tid,
                  eit_get_sid(p_eit),
                  psi_get_version(p_eit),
                  !psi_get_current(p_eit) ? " (next)" : "",
+                 psi_get_section(p_eit),
+                 psi_get_lastsection(p_eit),
                  eit_get_tsid(p_eit),
                  eit_get_onid(p_eit)
                 );
