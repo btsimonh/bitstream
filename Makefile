@@ -21,6 +21,8 @@ install:
 	@install -m 644 mpeg/*.h $(INCLUDE)/mpeg
 	@install -d $(INCLUDE)/mpeg/psi
 	@install -m 644 mpeg/psi/*.h $(INCLUDE)/mpeg/psi
+	@install -d $(INCLUDE)/smpte
+	@install -m 644 smpte/*.h $(INCLUDE)/smpte
 
 uninstall:
 	@echo "REMOVE   $(INCLUDE)"
