@@ -41,7 +41,7 @@ extern "C"
 {
 #endif
 
-#define FEC_HEADER_SIZE 16
+#define SMPTE_2022_FEC_HEADER_SIZE 16
 
 /*
  * Reminder : FEC Header
