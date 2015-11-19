@@ -1,6 +1,6 @@
 PREFIX ?= /usr/local
 INCLUDE = $(subst //,/,$(DESTDIR)/$(PREFIX)/include/bitstream)
-VERSION = 1.0
+VERSION = 1.1
 
 all:
 	@echo "Run \"make install\" to install biTStream into $(INCLUDE)"
@@ -23,6 +23,8 @@ install:
 	@install -m 644 mpeg/*.h $(INCLUDE)/mpeg
 	@install -d $(INCLUDE)/mpeg/psi
 	@install -m 644 mpeg/psi/*.h $(INCLUDE)/mpeg/psi
+	@install -d $(INCLUDE)/scte
+	@install -m 644 scte/*.h $(INCLUDE)/scte
 	@install -d $(INCLUDE)/smpte
 	@install -m 644 smpte/*.h $(INCLUDE)/smpte
 
@@ -30,7 +32,7 @@ uninstall:
 	@echo "REMOVE   $(INCLUDE)"
 	@rm -rf $(INCLUDE)
 
-distcheck:
+dist:
 	git archive --format=tar --prefix=bitstream-$(VERSION)/ master | bzip2 -9 > bitstream-$(VERSION).tar.bz2
 
 .PHONY: install uninstall distcheck
