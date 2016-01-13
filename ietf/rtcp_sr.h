@@ -3,7 +3,25 @@
 
 # include <inttypes.h>
 
+# define RTCP_RTP_VERSION       2
 # define RTCP_PT_SR             200
+
+static inline void rtcp_sr_set_rtp_version(uint8_t *p_rtcp_sr)
+{
+    p_rtcp_sr[0] = RTCP_RTP_VERSION << 6;
+}
+
+static inline void rtcp_sr_set_pt(uint8_t *p_rtcp_sr)
+{
+    p_rtcp_sr[1] = RTCP_PT_SR;
+}
+
+static inline void rtcp_sr_set_length(uint8_t *p_rtcp_sr,
+                                      uint16_t length)
+{
+    p_rtcp_sr[2] = length >> 8;
+    p_rtcp_sr[3] = length & 0xff;
+}
 
 static inline void rtcp_sr_set_ntp_time_msw(uint8_t *p_rtcp_sr,
                                             uint32_t ntp_time_msw)
