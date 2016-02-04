@@ -107,7 +107,7 @@ static inline uint8_t smpte_hbrmt_get_reference_for_time_stamp(const uint8_t *p_
 
 static inline void smpte_hbrmt_set_video_payload_scrambling(uint8_t *p_hbrmt, uint8_t s)
 {
-    p_hbrmt[2] |= (r & 0x3) << 4;
+    p_hbrmt[2] |= (s & 0x3) << 4;
 }
 
 static inline uint8_t smpte_hbrmt_get_video_payload_scrambling(const uint8_t *p_hbrmt)
@@ -185,10 +185,10 @@ static inline uint8_t smpte_hbrmt_get_sample(const uint8_t *p_hbrmt)
 
 static inline void smpte_hbrmt_set_fmt_reserve(uint8_t *p_hbrmt)
 {
-    p_hbrmt[7] &= ~0xff;
+    p_hbrmt[7] = 0;
 }
 
-static inline void smpte_hbrmt_set_timestamp(uint8_t *p_fec, uint32_t timestamp)
+static inline void smpte_hbrmt_set_timestamp(uint8_t *p_hbrmt, uint32_t timestamp)
 {
     p_hbrmt[8] =  (timestamp >> 24) & 0xff;
     p_hbrmt[9] =  (timestamp >> 16) & 0xff;
@@ -196,7 +196,7 @@ static inline void smpte_hbrmt_set_timestamp(uint8_t *p_fec, uint32_t timestamp)
     p_hbrmt[11] = (timestamp >>  0) & 0xff;
 }
 
-static inline uint32_t smpte_fec_get_timestamp(const uint8_t *p_fec)
+static inline uint32_t smpte_fec_get_timestamp(const uint8_t *p_hbrmt)
 {
     return (p_hbrmt[8] << 24) | (p_hbrmt[9] << 16) | (p_hbrmt[10] << 8) | p_hbrmt[11];
 }
