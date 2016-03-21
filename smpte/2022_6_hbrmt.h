@@ -196,7 +196,7 @@ static inline void smpte_hbrmt_set_timestamp(uint8_t *p_hbrmt, uint32_t timestam
     p_hbrmt[11] = (timestamp >>  0) & 0xff;
 }
 
-static inline uint32_t smpte_fec_get_timestamp(const uint8_t *p_hbrmt)
+static inline uint32_t smpte_hbrmt_get_timestamp(const uint8_t *p_hbrmt)
 {
     return (p_hbrmt[8] << 24) | (p_hbrmt[9] << 16) | (p_hbrmt[10] << 8) | p_hbrmt[11];
 }
