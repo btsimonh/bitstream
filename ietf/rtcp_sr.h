@@ -2,25 +2,24 @@
 # define __BITSTREAM_IETF_RTCP_SR_H__
 
 # include <inttypes.h>
+# include <bitstream/ietf/rtcp.h>
 
-# define RTCP_RTP_VERSION       2
 # define RTCP_PT_SR             200
 
-static inline void rtcp_sr_set_rtp_version(uint8_t *p_rtcp_sr)
+static inline void rtcp_sr_set_rtp_version(uint8_t *p_rtcp)
 {
-    p_rtcp_sr[0] = RTCP_RTP_VERSION << 6;
+    rtcp_set_rtp_version(p_rtcp);
 }
 
 static inline void rtcp_sr_set_pt(uint8_t *p_rtcp_sr)
 {
-    p_rtcp_sr[1] = RTCP_PT_SR;
+    rtcp_set_pt(p_rtcp_sr, RTCP_PT_SR);
 }
 
 static inline void rtcp_sr_set_length(uint8_t *p_rtcp_sr,
                                       uint16_t length)
 {
-    p_rtcp_sr[2] = length >> 8;
-    p_rtcp_sr[3] = length & 0xff;
+    rtcp_set_length(p_rtcp_sr, length);
 }
 
 static inline void rtcp_sr_set_ntp_time_msw(uint8_t *p_rtcp_sr,

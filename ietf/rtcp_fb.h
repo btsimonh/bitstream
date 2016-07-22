@@ -6,27 +6,55 @@
 # define RTCP_PT_RTPFB             205
 # define RTCP_PT_PSFB              206
 
+# define RTCP_PT_RTPFB_GENERIC_NACK 1
+
+# define RTCP_FB_HEADER_SIZE 12
+# define RTCP_FB_FCI_GENERIC_NACK_SIZE 4
+
 static inline void rtcp_fb_set_fmt(uint8_t *p_rtcp, uint8_t fmt)
 {
     p_rtcp[0] |= fmt & 0x1f;
 }
 
-static inline void rtcp_fb_set_ssrc_pkt_sender(uint8_t *p_rtcp_fb,
-                                               uint32_t ssrc)
+static inline uint8_t rtcp_fb_get_fmt(const uint8_t *p_rtcp)
 {
-    p_rtcp_fb[0] = (ssrc >> 24) & 0xff;
-    p_rtcp_fb[1] = (ssrc >> 16) & 0xff;
-    p_rtcp_fb[2] = (ssrc >> 8) & 0xff;
-    p_rtcp_fb[3] = ssrc & 0xff;
+    return p_rtcp[0] & 0x1f;
+}
+
+static inline void rtcp_fb_set_ssrc_pkt_sender(uint8_t *p_rtcp_fb,
+                                               const uint8_t pi_ssrc[4])
+{
+    p_rtcp_fb[4] = pi_ssrc[0];
+    p_rtcp_fb[5] = pi_ssrc[1];
+    p_rtcp_fb[6] = pi_ssrc[2];
+    p_rtcp_fb[7] = pi_ssrc[3];
 }
 
 static inline void rtcp_fb_set_ssrc_media_src(uint8_t *p_rtcp_fb,
-                                              uint32_t ssrc)
+                                              const uint8_t pi_ssrc[4])
 {
-    p_rtcp_fb[4] = (ssrc >> 24) & 0xff;
-    p_rtcp_fb[5] = (ssrc >> 16) & 0xff;
-    p_rtcp_fb[6] = (ssrc >> 8) & 0xff;
-    p_rtcp_fb[7] = ssrc & 0xff;
+    p_rtcp_fb[8] = pi_ssrc[0];
+    p_rtcp_fb[9] = pi_ssrc[1];
+    p_rtcp_fb[10] = pi_ssrc[2];
+    p_rtcp_fb[11] = pi_ssrc[3];
+}
+
+static inline void rtcp_fb_get_ssrc_pkt_sender(const uint8_t *p_rtcp_fb,
+                                               uint8_t pi_ssrc[4])
+{
+    pi_ssrc[0] = p_rtcp_fb[4];
+    pi_ssrc[1] = p_rtcp_fb[5];
+    pi_ssrc[2] = p_rtcp_fb[6];
+    pi_ssrc[3] = p_rtcp_fb[7];
+}
+
+static inline void rtcp_fb_get_ssrc_media_src(const uint8_t *p_rtcp_fb,
+                                              uint8_t pi_ssrc[4])
+{
+    pi_ssrc[0] = p_rtcp_fb[8];
+    pi_ssrc[1] = p_rtcp_fb[9];
+    pi_ssrc[2] = p_rtcp_fb[10];
+    pi_ssrc[3] = p_rtcp_fb[11];
 }
 
 static inline void rtcp_fb_nack_set_packet_id(uint8_t *p_rtcp_fb_nack,
@@ -34,6 +62,16 @@ static inline void rtcp_fb_nack_set_packet_id(uint8_t *p_rtcp_fb_nack,
 {
     p_rtcp_fb_nack[0] = (packet_id >> 8) & 0xff;
     p_rtcp_fb_nack[1] = packet_id & 0xff;
+}
+
+static inline uint16_t rtcp_fb_nack_get_packet_id(const uint8_t *p_rtcp_fb_nack)
+{
+    return (p_rtcp_fb_nack[0] << 8) | p_rtcp_fb_nack[1];
+}
+
+static inline uint16_t rtcp_fb_nack_get_bitmask_lost(const uint8_t *p_rtcp_fb_nack)
+{
+    return (p_rtcp_fb_nack[2] << 8) | p_rtcp_fb_nack[3];
 }
 
 static inline void rtcp_fb_nack_set_bitmask_lost(uint8_t *p_rtcp_fb_nack,
