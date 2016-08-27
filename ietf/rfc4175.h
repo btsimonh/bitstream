@@ -95,13 +95,13 @@ static inline uint8_t rfc4175_get_line_field_id(uint8_t *buf)
 
 static inline void rfc4175_set_line_number(uint8_t *buf, uint16_t number)
 {
-    buf[4] |= (number >> 8) & 0x80;
+    buf[4] |= (number >> 8) & 0x7f;
     buf[5]  = number & 0xff;
 }
 
 static inline uint16_t rfc4175_get_line_number(uint8_t *buf)
 {
-    return ((buf[4] & 0x80) << 8) | buf[5];
+    return ((buf[4] & 0x7f) << 8) | buf[5];
 }
 
 static inline void rfc4175_set_line_continuation(uint8_t *buf, uint8_t continuation)
@@ -116,13 +116,13 @@ static inline uint8_t rfc4175_get_line_continuation(uint8_t *buf)
 
 static inline void rfc4175_set_line_offset(uint8_t *buf, uint16_t offset)
 {
-    buf[6] |= (offset >> 8) & 0x80;
+    buf[6] |= (offset >> 8) & 0x7f;
     buf[7]  = offset & 0xff;
 }
 
 static inline uint16_t rfc4175_get_line_offset(uint8_t *buf)
 {
-    return ((buf[6] & 0x80) << 8) | buf[7];
+    return ((buf[6] & 0x7f) << 8) | buf[7];
 }
 
 
