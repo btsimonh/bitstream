@@ -74,55 +74,55 @@ static inline uint16_t rfc4175_get_extended_sequence_number(uint8_t *buf)
 
 static inline void rfc4175_set_line_length(uint8_t *buf, uint16_t length)
 {
-    buf[2] = (length >> 8) & 0xff;
-    buf[3] = length & 0xff;
+    buf[0] = (length >> 8) & 0xff;
+    buf[2] = length & 0xff;
 }
 
 static inline uint16_t rfc4175_get_line_length(uint8_t *buf)
 {
-    return (buf[2] << 8) | buf[3];
+    return (buf[0] << 8) | buf[1];
 }
 
 static inline void rfc4175_set_line_field_id(uint8_t *buf, uint8_t id)
 {
-    buf[4] |= (!!id) << 7;
+    buf[2] |= (!!id) << 7;
 }
 
 static inline uint8_t rfc4175_get_line_field_id(uint8_t *buf)
 {
-    return buf[4] >> 7;
+    return buf[2] >> 7;
 }
 
 static inline void rfc4175_set_line_number(uint8_t *buf, uint16_t number)
 {
-    buf[4] |= (number >> 8) & 0x7f;
-    buf[5]  = number & 0xff;
+    buf[2] |= (number >> 8) & 0x7f;
+    buf[3]  = number & 0xff;
 }
 
 static inline uint16_t rfc4175_get_line_number(uint8_t *buf)
 {
-    return ((buf[4] & 0x7f) << 8) | buf[5];
+    return ((buf[2] & 0x7f) << 8) | buf[3];
 }
 
 static inline void rfc4175_set_line_continuation(uint8_t *buf, uint8_t continuation)
 {
-    buf[6] |= (!!continuation) << 7;
+    buf[4] |= (!!continuation) << 7;
 }
 
 static inline uint8_t rfc4175_get_line_continuation(uint8_t *buf)
 {
-    return buf[6] >> 7;
+    return buf[4] >> 7;
 }
 
 static inline void rfc4175_set_line_offset(uint8_t *buf, uint16_t offset)
 {
-    buf[6] |= (offset >> 8) & 0x7f;
-    buf[7]  = offset & 0xff;
+    buf[4] |= (offset >> 8) & 0x7f;
+    buf[5]  = offset & 0xff;
 }
 
 static inline uint16_t rfc4175_get_line_offset(uint8_t *buf)
 {
-    return ((buf[6] & 0x7f) << 8) | buf[7];
+    return ((buf[4] & 0x7f) << 8) | buf[5];
 }
 
 
