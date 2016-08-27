@@ -75,7 +75,7 @@ static inline uint16_t rfc4175_get_extended_sequence_number(uint8_t *buf)
 static inline void rfc4175_set_line_length(uint8_t *buf, uint16_t length)
 {
     buf[0] = (length >> 8) & 0xff;
-    buf[2] = length & 0xff;
+    buf[1] = length & 0xff;
 }
 
 static inline uint16_t rfc4175_get_line_length(uint8_t *buf)
