@@ -40,6 +40,7 @@ extern "C"
 {
 #endif
 
+#define RFC_4175_EXT_SEQ_NUM_LEN 2
 #define RFC_4175_HEADER_LEN 6 /* Note: extended sequencence number not included */
 
 /*  0                   1                   2                   3
